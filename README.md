@@ -51,6 +51,7 @@ Not every change needs every step. A one-line fix doesn't get an independent rev
 | Command | [`/qa`](commands/qa.md) | Hands-on rendered QA of a route, flow, PR or session; reports, never edits |
 | Command | [`/update-my-workflow`](commands/update-my-workflow.md) | Audits or changes this configuration coherently |
 | Command | [`/ux.principles`](commands/ux.principles.md) | Writes or refines a product's `UX_PRINCIPLES.md` |
+| Command | [`/sync-upstream`](commands/sync-upstream.md) | Pulls workflow updates from the original config repo into your fork |
 | Agent | [`code-reviewer`](agent/code-reviewer.md) | Independent review via OCR delegation, plus the merge-danger call |
 | Agent | [`ui-designer`](agent/ui-designer.md) | Designs and implements UI grounded in the repo |
 | Skill | [`rendered-qa`](skills/rendered-qa/SKILL.md) | How to exercise a running UI and capture evidence |
