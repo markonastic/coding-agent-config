@@ -72,21 +72,17 @@
   "permission": {
     "external_directory": {
       "~/.local/share/opencode/implementation-worktrees/**": "allow",
-      "~/.local/share/coding-agent/implementation-worktrees/**": "allow"
+      "~/.local/share/coding-agent/implementation-worktrees/**": "allow",
+      "~/.config/opencode/**": "allow",
+      "~/.config/gh/**": "allow",
+      "/tmp/**": "allow"
     }
   },
   "mcp": {
     "playwright": {
       "type": "local",
       "command": [
-        "npx",
-        "-y",
-        "@playwright/mcp@latest",
-        "--headless",
-        "--isolated",
-        "--executable-path=/usr/bin/chromium",
-        "--output-dir=/tmp/opencode-playwright",
-        "--output-max-size=5242880"
+        "/home/marko/.local/bin/playwright-mcp"
       ],
       "enabled": true
     }
