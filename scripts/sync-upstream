@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+# Sync this configuration clone with the upstream workflow repository.
+#
+# Usage: sync-upstream [--dry-run]
+#
+# Fetches `upstream/main`, merges it into the local `main`, runs the
+# repository's verify gate, and pushes the result to `origin/main`.
+# A dirty tree or non-main checkout aborts; merge conflicts are left in
+# place for manual or agent-assisted resolution with a report on stderr.
+
+set -uo pipefail
+
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit 1
+
+branch="$(git rev-parse --abbrev-ref HEAD)"
+if [ "$branch" != "main" ]; then
+  echo "sync-upstream: checkout is on '$branch', run this on main" >&2
+  exit 1
+fi
+
+if [ -n "$(git status --porcelain)" ]; then
+  echo "sync-upstream: working tree is dirty; commit or stash before syncing" >&2
+  git status --short >&2
+  exit 1
+fi
+
+if ! git remote get-url upstream >/dev/null 2>&1; then
+  echo "sync-upstream: no 'upstream' remote; add it with:" >&2
+  echo "  git remote add upstream <original-repository-url>" >&2
+  exit 1
+fi
+
+echo "Fetching upstream..."
+git fetch upstream main --quiet || exit 1
+
+local_rev="$(git rev-parse main)"
+upstream_rev="$(git rev-parse upstream/main)"
+if [ "$local_rev" = "$upstream_rev" ]; then
+  echo "Already up to date with upstream/main ($upstream_rev)."
+  exit 0
+fi
+
+echo "Incoming commits:"
+git log --oneline "${local_rev}..${upstream_rev}"
+
+if [ "${1:-}" = "--dry-run" ]; then
+  echo "Dry run complete; nothing was merged or pushed."
+  exit 0
+fi
+
+if ! git merge upstream/main; then
+  conflicts="$(git diff --name-only --diff-filter=U)"
+  echo "sync-upstream: merge conflicts in:" >&2
+  printf '  %s\n' $conflicts >&2
+  echo "Resolve them, commit the merge, run 'npm run verify', then push." >&2
+  exit 1
+fi
+
+echo "Running verify gate..."
+if ! npm run verify --silent; then
+  echo "sync-upstream: verify failed on the merge; fix before pushing." >&2
+  echo "  (the merge commit is in place; HEAD is not published)" >&2
+  exit 1
+fi
+
+if git push origin main; then
+  echo "Synced: main pushed to origin and up to date with upstream/main."
+else
+  echo "sync-upstream: push failed; the merge is committed locally." >&2
+  exit 1
+fi
