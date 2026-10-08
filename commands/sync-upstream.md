@@ -14,6 +14,8 @@ Run:
 scripts/sync-upstream
 ```
 
+Optional flags (for example `--dry-run`) come from `$ARGUMENTS` when present.
+
 ## If It Conflicts
 
 The script leaves the merge in progress when files conflict. Resolve them:
