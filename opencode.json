@@ -75,6 +75,7 @@
       "~/.local/share/coding-agent/implementation-worktrees/**": "allow",
       "~/.config/opencode/**": "allow",
       "~/.config/gh/**": "allow",
+      "~/.local/share/mise/installs/node/22.3.3/lib/node_modules/@alibaba-group/open-code-review/**": "allow",
       "/tmp/**": "allow"
     }
   },
