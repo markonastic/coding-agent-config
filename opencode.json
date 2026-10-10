@@ -2,7 +2,7 @@
   "$schema": "https://opencode.ai/config.json",
   "agent": {
     "general": {
-      "model": "openai/gpt-5.6-luna"
+      "model": "opencode-go/gpt-5.6-luna"
     },
     "ui-designer": {
       "description": "Design and implement repository-grounded UI with practical targeted rendered validation",
@@ -36,7 +36,7 @@
       }
     },
     "explore": {
-      "model": "openai/gpt-5.6-luna",
+      "model": "opencode-go/gpt-5.6-luna",
       "permission": {
         "bash": {
           "*": "deny",
@@ -82,7 +82,15 @@
     "playwright": {
       "type": "local",
       "command": [
-        "/home/marko/.local/bin/playwright-mcp"
+        "npx",
+        "-y",
+        "@playwright/mcp@latest",
+        "--headless",
+        "--isolated",
+        "--allow-unrestricted-file-access",
+        "--executable-path=/usr/bin/chromium",
+        "--output-dir=/tmp/opencode-playwright",
+        "--output-max-size=5242880"
       ],
       "enabled": true
     }

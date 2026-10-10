@@ -36,6 +36,20 @@ trade-offs, and evidence rather than overstating confidence. Avoid unnecessary
 ceremony, and finish with a clear summary of changes, validation, and useful
 follow-up information.
 
+## Tooling hygiene
+
+Keep tool friction low by reading before editing and retrying cleanly:
+
+- Before calling `edit`, `read` the target file unless it was just read in the
+  same turn. Do not edit from memory or a stale transcript.
+- Make `oldString` anchors unique: include at least three lines of surrounding
+  context, not a bare single line that may have multiple matches.
+- If `edit` fails with "oldString not found", re-`read` the file before
+  retrying. An earlier edit, formatter, or linter likely changed the content.
+- If `edit` fails with "multiple matches", broaden the surrounding context so
+  the anchor identifies exactly one location.
+- Do not pass identical `oldString` and `newString` to `edit`.
+
 ## Git delivery
 
 Deliver completed work as a pull request without waiting to be asked. Once the
