@@ -54,6 +54,13 @@ not what shipped. On subsequent delivery, rewrite the title and body to match
 the current whole PR; remove superseded claims, checks and media rather than
 appending an update diary. `/implement` owns posting and media publication.
 
+When the fixed work originates from a specific issue, add a closing-keyword
+link at the end of the body so GitHub auto-closes it when the PR merges
+(`Closes #123`; `Fixes`/`Resolves` behave the same). Use one
+link word for a single issue; list several on separate closing lines for
+multiple ones. Only link a genuinely fixed issue: skip partial contributions,
+do not guess a number, and ask that the user pass it on if it is unknown.
+
 ### Shape The Description
 
 Normally aim for about 100–200 words of main-body prose, plus a useful visual.

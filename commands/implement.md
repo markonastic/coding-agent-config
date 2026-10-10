@@ -207,7 +207,11 @@ the review gate leave no unresolved blockers.
    branch may be public, and later cleanup does not erase history. Republish on
    follow-up delivery so the media stays current.
    If media cannot be published, deliver anyway and say why in Evidence.
-7. Use `commit-pr-writing` for the pull-request title and description. For
+7. Use `commit-pr-writing` for the pull-request title and description. When the
+   request names a known issue, include its closing-keyword link (`Closes
+   #<number>`) in the body so GitHub auto-closes that issue when the pull
+   request is merged; if the issue number is not known, resolve it from the
+   request or ask rather than guessing. For
    initial delivery, create the pull request with `gh` against `defaultBranch`.
    For follow-up delivery, update the existing pull request instead of
    creating another. Never merge it.
